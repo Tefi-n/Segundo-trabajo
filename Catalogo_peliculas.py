@@ -19,12 +19,9 @@ class CatalogoPelicula():
         self.genero_pelicula = genero_pelicula
         self.ruta_archivo = ruta_archivo
 
-        # Cargar películas desde el archivo al inicio
-        self.cargar_desde_archivo()
-
     def agregar(self, pelicula):
         self.peliculas.append(pelicula)
-        print(f"La película '{pelicula.titulo}' ha sido agregada al catálogo correctamente.")
+        print(f"La película '{pelicula.titulo}' ha sido agregada al catálogo correctamente")
         self.guardar_en_archivo()
 
     def listar(self):
@@ -32,14 +29,14 @@ class CatalogoPelicula():
             for pelicula in self.peliculas:
                 print(pelicula)
         else:
-            print("El catálogo está vacío.")
+            print("El catálogo está vacío")
 
     def eliminar(self):
         if os.path.exists(self.ruta_archivo):
             os.remove(self.ruta_archivo)
-            print(f"El catálogo '{self.genero_pelicula}' ha sido eliminado.")
+            print(f"El catálogo '{self.genero_pelicula}' ha sido eliminado")
         else:
-            print("No se encuentran existencias.")
+            print("No se encuentran existencias")
 
     def guardar_en_archivo(self):
         try:
@@ -49,28 +46,20 @@ class CatalogoPelicula():
         except Exception as e:
             print(f"Error al guardar en el archivo: {e}")
 
-    def cargar_desde_archivo(self):
-        try:
-            if os.path.exists(self.ruta_archivo):
-                with open(self.ruta_archivo, 'r') as file:
-                    for line in file:
-                        datos = line.strip().split(',')
-                        if len(datos) == 3:
-                            pelicula = Pelicula(datos[0], datos[1], datos[2])
-                            self.peliculas.append(pelicula)
-        except Exception as e:
-            print(f"Error al cargar desde el archivo: {e}")
-
-def menu_principal():
-    nombre_catalogo = input("Ingrese el nombre del género de película buscado: ")
-    catalogo = CatalogoPelicula(nombre_catalogo, "C:\\Users\\teefi\\OneDrive\\Documentos\\Python\\catalo_pelicula.txt")
+def menu():
+  
+    c_peliculas = CatalogoPelicula("Catalogo", "catalogo_peliculas.txt")
 
     while True:
-        print("\n¿Qué desea hacer?:")
-        print("1. Agregar películas al catálogo")
-        print("2. Listar películas existentes")
-        print("3. Eliminar catálogo")
-        print("4. Salir")
+        print("\n ::: CATÁLOGO DE PELÍCULAS::: "
+            "\n"
+            "\n Menú de opciones: "
+            "\n"
+            "\n 1. Agregar películas al catálogo"
+            "\n 2. Listar películas existentes"
+            "\n 3. Eliminar catálogo"
+            "\n 4. Salir")
+        
 
         try:
             opcion = int(input("Seleccione la opción deseada: "))
@@ -80,23 +69,20 @@ def menu_principal():
                 director = input("Ingrese el nombre del director: ")
                 genero = input("Ingrese el género de la película: ")
                 pelicula = Pelicula(titulo, director, genero)
-                catalogo.agregar(pelicula)
+                c_peliculas.agregar(pelicula)
 
             elif opcion == 2:
-                catalogo.listar()
+                c_peliculas.listar()
 
             elif opcion == 3:
-                catalogo.eliminar()
+                c_peliculas.eliminar()
                 break
 
             elif opcion == 4:
                 print("¡Hasta pronto!")
                 break
 
-            else:
-                print("Opción inválida. Por favor, elija una opción correcta.")
         except ValueError:
-            print("Ingrese un número válido.")
+            print("Ingrese una opción válida")
 
-if __name__ == "__main__":
-    menu_principal()
+menu()
